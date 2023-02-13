@@ -110,9 +110,19 @@ class RNDdSdk: NSObject {
         resolve(nil)
     }
     
+    @objc(webview:withResolver:withRejecter:)
+    func webview(message: NSString, resolve:RCTPromiseResolveBlock, reject:RCTPromiseRejectBlock) -> Void {
+        let weBridge = WebEventBridge(core: defaultDatadogCore)
+        do {
+            try weBridge.consume(message)
+            resolve(nil)
+        } catch let error {
+            reject("error", "error", error)
+        }
+    }
+
     @objc(telemetryError:withStack:withKind:withResolver:withRejecter:)
     func telemetryDebug(message: NSString, stack: NSString, kind: NSString, resolve:RCTPromiseResolveBlock, reject:RCTPromiseRejectBlock) -> Void {
-        Datadog._internal.telemetry.error(id: "datadog_react_native:\(String(describing: kind)):\(message)", message: message as String, kind: kind as? String, stack: stack as? String)
         resolve(nil)
     }
     
@@ -349,4 +359,66 @@ class RNDdSdk: NSObject {
         return frameTimeCallback
     }
 
+}
+
+internal enum WebEventError: Error, Equatable {
+    case dataSerialization(message: String)
+    case JSONDeserialization(rawJSONDescription: String)
+    case invalidMessage(description: String)
+    case missingKey(key: String)
+}
+
+internal typealias JSON = [String: Any]
+
+internal class WebEventBridge {
+    struct Constants {
+        static let eventTypeKey = "eventType"
+        static let eventKey = "event"
+        static let eventTypeLog = "log"
+        static let browserLog = "browser-log"
+        static let browserEvent = "browser-rum-event"
+    }
+
+    private let core: DatadogCoreProtocol
+
+    init(core: DatadogCoreProtocol) {
+        self.core = core
+    }
+
+    func consume(_ anyMessage: Any) throws {
+        guard let message = anyMessage as? String else {
+            throw WebEventError.invalidMessage(description: String(describing: anyMessage))
+        }
+
+        let eventJSON = try parse(message)
+
+        guard let type = eventJSON[Constants.eventTypeKey] as? String else {
+            throw WebEventError.missingKey(key: Constants.eventTypeKey)
+        }
+
+        guard let event = eventJSON[Constants.eventKey] as? JSON else {
+            throw WebEventError.missingKey(key: Constants.eventKey)
+        }
+
+        if type == Constants.eventTypeLog {
+            core.send(message: .custom(key: Constants.browserLog, baggage: .init(event)), sender: core, else: {
+                // TODO: log
+            })
+        } else {
+            core.send(message: .custom(key: Constants.browserEvent, baggage: .init(event)), sender: core, else: {
+                // TODO: log
+            })
+        }
+    }
+
+    private func parse(_ message: String) throws -> JSON {
+        guard let data = message.data(using: .utf8) else {
+            throw WebEventError.dataSerialization(message: message)
+        }
+        let rawJSON = try JSONSerialization.jsonObject(with: data, options: [])
+        guard let json = rawJSON as? JSON else {
+            throw WebEventError.JSONDeserialization(rawJSONDescription: String(describing: rawJSON))
+        }
+        return json
+    }
 }
