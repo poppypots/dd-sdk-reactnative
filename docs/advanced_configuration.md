@@ -40,6 +40,7 @@ import {
     DdSdkReactNative,
     DdSdkReactNativeConfiguration,
     DdLogs,
+    DdTrace,
     ErrorSource,
     RumActionType,
     DdRum
@@ -162,8 +163,8 @@ Events include additional context:
 
 Resource tracking provides the following timings:
 
--   `First Byte`: The time between the scheduled request and the first byte of the response. This includes time for the request preparation on the native level, network latency, and the time it took the server to prepare the response.
--   `Download`: The time it took to receive a response.
+- `First Byte`: The time between the scheduled request and the first byte of the response. This includes time for the request preparation on the native level, network latency, and the time it took the server to prepare the response.
+- `Download`: The time it took to receive a response.
 
 ## Initializing asynchronously
 
@@ -208,10 +209,7 @@ There may be situations where you want to wait before initializing the SDK. For 
 In that case, you can auto-instrument your app from the start (automatically collect user interactions, XHR resources, and errors) and record up to 100 RUM and span events before initializing the SDK.
 
 ```js
-import {
-    DatadogProvider,
-    DatadogProviderConfiguration
-} from '@datadog/mobile-react-native';
+import { DatadogProvider } from '@datadog/mobile-react-native';
 
 const datadogAutoInstrumentation = {
     trackErrors: true,
@@ -227,7 +225,9 @@ const initializeApp = async () => {
 };
 
 export default function App() {
-    useEffect(() => initializeApp(), []);
+    useEffect(() => { 
+        initializeApp()
+    }, []);
 
     return (
         <DatadogProvider configuration={datadogAutoInstrumentation}>

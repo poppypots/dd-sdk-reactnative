@@ -2,9 +2,9 @@
 
 Enable React Native Crash Reporting and Error Tracking to get comprehensive crash reports and error trends with Real User Monitoring. With this feature, you can access:
 
--   Aggregated React Native crash dashboards and attributes
--   Symbolicated React Native (JavaScript and native iOS or Android) crash reports
--   Trend analysis with React Native Error Tracking
+- Aggregated React Native crash dashboards and attributes
+- Symbolicated React Native (JavaScript and native iOS or Android) crash reports
+- Trend analysis with React Native Error Tracking
 
 In order to symbolicate your stack traces, manually upload your mapping files into Datadog.
 
@@ -57,10 +57,10 @@ echo "Size of source maps and bundle is $(($payloadsize / 1000000))MB"
 
 In order to make your application's size smaller, its code is minified when it is built for release. To link errors to your actual code, you need to upload the following symbolication files:
 
--   JavaScript source map for your iOS JavaScript bundle
--   JavaScript source map for your Android JavaScript bundle
--   dSYMs for your iOS native code
--   Proguard mapping files if you have enabled code obfuscation for your Android native code
+- JavaScript source map for your iOS JavaScript bundle
+- JavaScript source map for your Android JavaScript bundle
+- dSYMs for your iOS native code
+- Proguard mapping files if you have enabled code obfuscation for your Android native code
 
 To set your project up to send the symbolication files automatically, run `npx datadog-react-native-wizard`.
 
@@ -73,7 +73,7 @@ To make sure your sourcemaps are correctly sent and linked to your application, 
 Install it with yarn or npm then re-install your pods:
 
 ```shell
-yarn install react-native-performance-limiter # or npm install react-native-performance-limiter
+yarn add react-native-performance-limiter # or npm install react-native-performance-limiter
 (cd ios && pod install)
 ```
 
@@ -143,8 +143,8 @@ DATADOG_XCODE="$(echo $PACKAGE_MANAGER_BIN) datadog-ci react-native xcode"
 
 This script finds the best way to run the `yarn datadog-ci react-native xcode` command:
 
--   `yarn` can be used if you use a tool like [fastlane][9] or a service like [Bitrise][10] or [AppCenter][11] to build your app
--   `/opt/homebrew/bin/node /opt/homebrew/bin/yarn` must be used on Mac if you run the release build from XCode directly
+- `yarn` can be used if you use a tool like [fastlane][9] or a service like [Bitrise][10] or [AppCenter][11] to build your app
+- `/opt/homebrew/bin/node /opt/homebrew/bin/yarn` must be used on Mac if you run the release build from XCode directly
 
 It runs this command that takes care of uploading the source maps with all the correct parameters. For more information, see the [datadog-ci documentation][12].
 
@@ -197,8 +197,8 @@ $(echo $PACKAGE_MANAGER_BIN datadog-ci react-native xcode)
 
 This script finds the best way to run the `yarn datadog-ci react-native xcode` command:
 
--   `yarn` can be used if you use a tool like [fastlane][9] or a service like [Bitrise][10] or [AppCenter][11] to build your app
--   `/opt/homebrew/bin/node /opt/homebrew/bin/yarn` must be used on Mac if you run the release build from XCode directly
+- `yarn` can be used if you use a tool like [fastlane][9] or a service like [Bitrise][10] or [AppCenter][11] to build your app
+- `/opt/homebrew/bin/node /opt/homebrew/bin/yarn` must be used on Mac if you run the release build from XCode directly
 
 It runs this command that takes care of uploading the source maps with all the correct parameters. For more information, see the [datadog-ci documentation][12].
 
@@ -330,9 +330,9 @@ You can also specify the Datadog site (such as `datadoghq.eu`) as a `DATADOG_SIT
 On Android, the source map file is located at `android/app/build/generated/sourcemaps/react/release/index.android.bundle.map`.
 The bundle file location depends on your React Native (RN) and Android Gradle Plugin (AGP) versions:
 
--   RN >= 0.71 and AGP >= 7.4.0: `android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle`
--   RN >= 0.71 and AGP < 7.4.0: `android/app/build/ASSETS/createBundleReleaseJsAndAssets/index.android.bundle`
--   RN < 0.71: `android/app/build/generated/assets/react/release/index.android.bundle`
+- RN >= 0.71 and AGP >= 7.4.0: `android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle`
+- RN >= 0.71 and AGP < 7.4.0: `android/app/build/ASSETS/createBundleReleaseJsAndAssets/index.android.bundle`
+- RN < 0.71: `android/app/build/generated/assets/react/release/index.android.bundle`
 
 The Android Gradle Plugin version is specified in the `android/build.gradle` file under `com.android.tools.build:gradle`, for instance: `classpath("com.android.tools.build:gradle:7.3.1")`.
 

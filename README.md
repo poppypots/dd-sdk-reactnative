@@ -68,7 +68,7 @@ config.serviceName = 'com.example.reactnative';
 // Optional: let the SDK print internal logs above or equal to the provided level. Default is undefined (meaning no logs)
 config.verbosity = SdkVerbosity.WARN;
 
-await DdSdkReactNative.initialize(config);
+DdSdkReactNative.initialize(config);
 
 // Once the Datadog React Native SDK for RUM is initialized, you need to setup view tracking to be able to see data in the RUM dashboard
 ```
@@ -101,7 +101,7 @@ config.sessionSamplingRate = 80;
 config.resourceTracingSamplingRate = 80;
 config.firstPartyHosts = ['example.com']; // matches 'example.com' and subdomains like 'api.example.com'
 
-await DdSdkReactNative.initialize(config);
+DdSdkReactNative.initialize(config);
 
 // Once the Datadog React Native SDK for RUM is initialized, you need to setup view tracking to be able to see data in the RUM dashboard
 ```
@@ -134,7 +134,7 @@ config.sessionSamplingRate = 80;
 config.resourceTracingSamplingRate = 80;
 config.firstPartyHosts = ['example.com']; // matches 'example.com' and subdomains like 'api.example.com'
 
-await DdSdkReactNative.initialize(config);
+DdSdkReactNative.initialize(config);
 
 // Once the Datadog React Native SDK for RUM is initialized, you need to setup view tracking to be able to see data in the RUM dashboard
 ```
@@ -167,7 +167,7 @@ config.sessionSamplingRate = 80;
 config.resourceTracingSamplingRate = 80;
 config.firstPartyHosts = ['example.com']; // matches 'example.com' and subdomains like 'api.example.com'
 
-await DdSdkReactNative.initialize(config);
+DdSdkReactNative.initialize(config);
 
 // Once the Datadog React Native SDK for RUM is initialized, you need to setup view tracking to be able to see data in the RUM dashboard
 ```
@@ -200,7 +200,7 @@ config.sessionSamplingRate = 80;
 config.resourceTracingSamplingRate = 80;
 config.firstPartyHosts = ['example.com']; // matches 'example.com' and subdomains like 'api.example.com'
 
-await DdSdkReactNative.initialize(config);
+DdSdkReactNative.initialize(config);
 
 // Once the Datadog React Native SDK for RUM is initialized, you need to setup view tracking to be able to see data in the RUM dashboard
 ```
@@ -267,8 +267,8 @@ DdRum.stopView('<view-key>', { 'custom.bar': 42 }, Date.now());
 
 Use one of Datadog's integrations to automatically track views for the following libraries:
 
--   If you use the [`react-native-navigation`][5] library, then add the `@datadog/mobile-react-native-navigation` package and follow the [setup instructions][6].
--   If you use the [`react-navigation`][7] library, then add the `@datadog/mobile-react-navigation` package and follow the [setup instructions][8].
+- If you use the [`react-native-navigation`][5] library, then add the `@datadog/mobile-react-native-navigation` package and follow the [setup instructions][6].
+- If you use the [`react-navigation`][7] library, then add the `@datadog/mobile-react-navigation` package and follow the [setup instructions][8].
 
 ## Track custom attributes
 
@@ -323,13 +323,13 @@ To prevent these events from showing in the dashboard, you can disable errors an
 
 ```
 const config = new DdSdkReactNativeConfiguration(
-	CLIENT_TOKEN,
-	ENVIRONMENT,
-	APPLICATION_ID,
-	true,
-	!__DEV__  /* trackResources will be false in DEV mode, true otherwise */,
-	!__DEV__  /* trackErrors will be false in DEV mode, true otherwise */,
-	trackingConsent
+ CLIENT_TOKEN,
+ ENVIRONMENT,
+ APPLICATION_ID,
+ true,
+ !__DEV__  /* trackResources will be false in DEV mode, true otherwise */,
+ !__DEV__  /* trackErrors will be false in DEV mode, true otherwise */,
+ trackingConsent
 )
 ```
 
@@ -374,7 +374,6 @@ For more information, see [Apache License, v2.0][9]
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: https://app.datadoghq.com/rum/application/create
-[2]: https://raw.githubusercontent.com/DataDog/dd-sdk-reactnative/main/docs/image_reactnative.png
 [3]: https://docs.datadoghq.com/account_management/api-app-keys/#api-keys
 [4]: https://docs.datadoghq.com/account_management/api-app-keys/#client-tokens
 [5]: https://github.com/wix/react-native-navigation
